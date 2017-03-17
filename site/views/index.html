@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>MySQL Data analysis tool</title>
+  </head>
+  <body>
+    <h1>MySQL analysis tool!</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    <div id="databaseConnection">
+      Database name:<br>
+      <input type="text" name="database"><br>
+      Host (leave empty if local):<br>
+      <input type="text" name="host"><br>
+      User:<br>
+      <input type="text" name="user"><br>
+      Password:<br>
+      <input type="text" name="password"><br>
+    </div>
+    <button id="submit">Connect</button>
+    <footer>
+    We are using Node.js <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+    </footer>
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('../renderers/index.js')
+  </script>
+</html>

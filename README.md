@@ -1,0 +1,1 @@
+* Electron-based desktop app for MySQLdata visualisation
