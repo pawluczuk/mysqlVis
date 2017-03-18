@@ -5,9 +5,6 @@ const {ipcRenderer} = require('electron')
 //console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
 ipcRenderer.on('db-connected', (event, arg) => {
 	console.log(arg)
-	if (arg.success) {
-		window.url = 'main.html'
-	}
 });
 
 var $submitBtn = document.querySelector('#submit');

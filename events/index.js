@@ -27,14 +27,34 @@ eventManager = function () {
 	});
 
 	ipcMain.on('getTablesList', (event, args) => {
-		connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-		  if (error) {
+		if (!connection) {
+			return event.sender.send('tablesList', { success: false, err: 'no connection' });
+		}
+		connection.query('SHOW TABLES', function (err, results, fields) {
+		  	if (err) {
 		  		event.sender.send('tablesList', { success: false, err: err.stack });
 		  		return;
-		  }
-		  console.log('The solution is: ', results[0].solution);
+		  	}
+		  	results = results.map(r => { return r['Tables_in_dw'];});
+		  	
+			event.sender.send('tablesList', { success: true, results: results});
 		});
 	});
+
+	ipcMain.on('getTableData', (event, args) => {
+		let tableName = args.tableName, filters = args.filters;
+		if (!connection) {
+			return event.sender.send('tablesList', { success: false, err: 'no connection' });
+		}
+		var query = 'SELECT * FROM ' + tableName;
+		connection.query(query, (err, results, fields) => {
+			if (err) {
+		  		event.sender.send('tableData', { success: false, err: err.stack });
+		  		return;
+		  	}
+		  	event.sender.send('tableData', { success: true, results, fields });
+		});
+	})
 }
 
 eventManager.close = function close() {
