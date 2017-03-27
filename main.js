@@ -8,8 +8,10 @@ const {ipcMain} = require('electron')
 const path = require('path')
 const url = require('url');
 
-const eventsManager = require('./events/index')({ipcMain})()
+const eventsManager = require('./events/index')({ipcMain})
   , windowsManager = require('./windows/index');
+
+let dbConfig;
 
 //require('crash-reporter').start();
 // Keep a global reference of the window object, if you don't, the window will
@@ -18,7 +20,15 @@ const eventsManager = require('./events/index')({ipcMain})()
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', windowsManager.create);
+app.on('ready', function() {
+  try {
+    let config = require('./config.json');
+    dbConfig = config;
+  } catch (ex) {
+  }
+  eventsManager.eventManager(dbConfig);
+  windowsManager.create();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -31,8 +41,6 @@ app.on('window-all-closed', function () {
 })
 
 app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     windowsManager.create();
   }

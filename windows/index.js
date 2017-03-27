@@ -4,6 +4,42 @@ const url = require('url')
 const path = require('path')
 let windows = {};
 
+windows.createWindow = function createWindow(viewPath) {
+	var newWindow = new BrowserWindow({width: 1200, height: 700});
+	newWindow.loadURL(url.format({
+	    pathname: path.join(__dirname, viewPath),
+	    protocol: 'file:',
+	    parent: mainWindow,
+	    slashes: true
+  	}));
+
+  	newWindow.on('closed', function () {
+    	newWindow = null
+  	});
+
+  	newWindow.on('error', function() {
+  		newWindow = null
+  	});
+  	newWindow.webContents.openDevTools();
+  	return newWindow;
+}
+
+windows.createMainWindow = function createMainWindow() {
+	mainWindow = new BrowserWindow({width: 1200, height: 700});
+	mainWindow.loadURL(url.format({
+	    pathname: path.join(__dirname, '../site/views/index.html'),
+	    protocol: 'file:',
+	    slashes: true
+  	}));
+  	mainWindow.webContents.openDevTools()
+ 	mainWindow.on('closed', function () {
+	    mainWindow = null
+  	});
+ 	mainWindow.on('error', function() {
+ 		mainWindow = null;
+ 	});
+};
+
 windows.create = function create() {
 	mainWindow = new BrowserWindow({width: 1200, height: 700});
 	mainWindow.loadURL(url.format({
@@ -12,37 +48,12 @@ windows.create = function create() {
 	    slashes: true
   	}));
   	mainWindow.webContents.openDevTools()
-  	connectedWindow = new BrowserWindow({width: 1200, height: 700, parent: mainWindow, modal: true, show: false})
-  
-	  // and load the index.html of the app.
-	  connectedWindow.loadURL(url.format({
-	    pathname: path.join(__dirname, '../site/views/main.html'),
-	    protocol: 'file:',
-	    slashes: true
-	  }))
-
-	  // Open the DevTools.
-	  mainWindow.webContents.openDevTools()
-	  connectedWindow.webContents.openDevTools()
-
-	  // Emitted when the window is closed.
-	  mainWindow.on('closed', function () {
-	    // Dereference the window object, usually you would store windows
-	    // in an array if your app supports multi windows, this is the time
-	    // when you should delete the corresponding element.
+ 	mainWindow.on('closed', function () {
 	    mainWindow = null
-	  })
-
-	  connectedWindow.on('closed', function () {
-	    // Dereference the window object, usually you would store windows
-	    // in an array if your app supports multi windows, this is the time
-	    // when you should delete the corresponding element.
-	    connectedWindow = null
-	  })
-
-	  connectedWindow.on('error', function() {
-	  	connectedWindow = null
-	  })
+  	});
+ 	mainWindow.on('error', function() {
+ 		mainWindow = null;
+ 	});
 };
 
 module.exports = windows;

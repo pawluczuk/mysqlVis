@@ -1,0 +1,6 @@
+{ 
+	"database": "employees",
+  	"host": "localhost",
+  	"password": "app_pwd",
+  	"user": "app" 
+}
