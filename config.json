@@ -1,5 +1,5 @@
 { 
-	"database": "employees",
+	"database": "dw",
   	"host": "localhost",
   	"password": "app_pwd",
   	"user": "app" 

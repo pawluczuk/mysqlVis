@@ -1,11 +1,14 @@
 const {ipcRenderer} = require('electron')
 const _ = require('lodash')
+const barchart = require('../scripts/barchart.js')
+
 let $select = $('.tableSelect')
 	, $visSelect = $('#panel-vis > .tableSelect')
 	, $tableSelect = $('#panel-table > .tableSelect')
 	, $menu = $('#menu')
 	, $panels = $('#panels')
 	, $visualisations = $('.vis')
+	, $visualisationPlaceholder = $('#chartContainer')
 	, initd = false
 	, tables = []
 	, columns = [];
@@ -129,7 +132,7 @@ function startD3(type, data) {
 }
 
 function barChart(data) {
-	console.log("barchart")
+	barchart.create(data, $visualisationPlaceholder);
 }
 
 function timeSeries(data) {

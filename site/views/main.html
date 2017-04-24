@@ -60,7 +60,8 @@
             </div>
             <select class="tableSelect" data-panel="vis" name="Tables"></select>
             <div class="col-xs-12" id="chartContainer">
-              <div id="chart">
+              <div id="chart-filters" class="row"></div>
+              <svg class="chart"></svg>
             </div>
           </div>
           <div id="panel-about" class="row" hidden>
@@ -85,6 +86,7 @@
   <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script>
+  console.log(d3)
     // You can also require other files to run in this process
     require('../renderers/main.js')
   </script>
